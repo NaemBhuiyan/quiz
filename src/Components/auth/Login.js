@@ -14,7 +14,8 @@ const Login = () => {
   return (
     <div>
       <Container>
-        <Row justify="center" className="justify-content-center">
+        <h3 className=" mt-5 text-center">Log in</h3>
+        <Row className="justify-content-center mt-5">
           <Col md={6}>
             <Form>
               <FormGroup>
