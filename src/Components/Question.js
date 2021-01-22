@@ -7,13 +7,13 @@ import Context from "../context/Context";
 const Question = () => {
   const [questionText, setQuestionText] = useState("");
   const { setQuestions, questions } = useContext(Context);
-  const submit = (e) => {
+  const submitQuestion = (e) => {
     e.preventDefault();
     const newQuestion = {
       id: uuidv4(),
       text: questionText,
     };
-    setQuestions([...questions, newQuestion]);
+    setQuestions([newQuestion, ...questions]);
     setQuestionText("");
   };
   return (
@@ -30,7 +30,7 @@ const Question = () => {
               value={questionText}
               onChange={({ target }) => setQuestionText(target.value)}
             />
-            <Button type="submit" className="mt-4" onClick={submit}>
+            <Button type="submit" className="mt-4" onClick={submitQuestion}>
               Save
             </Button>
           </Form>
