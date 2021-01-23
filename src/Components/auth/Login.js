@@ -14,7 +14,7 @@ import {
 import Context from "../../context/Context";
 
 const Login = () => {
-  const { setIsAdmin, admin } = useContext(Context);
+  const { setIsAdmin, admin, setIsLogin } = useContext(Context);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
   const history = useHistory();
@@ -23,6 +23,7 @@ const Login = () => {
     if (admin.email === adminEmail && adminPassword === admin.password) {
       localStorage.setItem("admin", JSON.stringify(true));
       setIsAdmin(JSON.parse(localStorage.getItem("admin")));
+      setIsLogin(true);
       history.push("/questions");
     } else {
       history.push("/answers");

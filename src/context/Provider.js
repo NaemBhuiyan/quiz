@@ -9,7 +9,10 @@ const Provider = ({ children }) => {
   );
 
   const [answerModal, setAnswerModal] = useState(false);
-  const [isAdmin, setIsAdmin] = useState();
+  const [isLogin, setIsLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(
+    JSON.parse(localStorage.getItem("admin") || false)
+  );
 
   const admin = {
     email: "admin@email.com",
@@ -29,6 +32,8 @@ const Provider = ({ children }) => {
     setAnswerModal,
     isAdmin,
     setIsAdmin,
+    isLogin,
+    setIsLogin,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

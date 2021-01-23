@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -8,22 +8,28 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Button,
 } from "reactstrap";
+import Context from "../context/Context";
 
-const AppNavbar = (props) => {
+const AppNavbar = () => {
   const [collapsed, setCollapsed] = useState(true);
 
+  const { isLogin, setIsLogin, setIsAdmin } = useContext(Context);
+
   const toggleNavbar = () => setCollapsed(!collapsed);
+
+  const history = useHistory();
 
   return (
     <div>
       <Navbar expand="md" color="light" light>
         <NavbarBrand href="/" className="mr-auto">
-          reactstrap
+          Quiz
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
-          <Nav navbar>
+          <Nav className="mr-auto ml-4" navbar>
             <NavItem>
               <NavLink tag={Link} to="/questions">
                 Question
@@ -35,6 +41,18 @@ const AppNavbar = (props) => {
               </NavLink>
             </NavItem>
           </Nav>
+          {isLogin && (
+            <Button
+              color="info"
+              onClick={() => {
+                localStorage.removeItem("admin");
+                setIsAdmin(false);
+                setIsLogin(false);
+                history.push("/");
+              }}>
+              Log out
+            </Button>
+          )}
         </Collapse>
       </Navbar>
     </div>
