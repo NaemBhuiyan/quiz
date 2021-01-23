@@ -17,6 +17,7 @@ import Context from "../context/Context";
 import AnswerModal from "./AnswerModal";
 
 const Answers = () => {
+  const [questionId, setQuestionId] = useState();
   const { questions, answerModal, setAnswerModal } = useContext(Context);
 
   return (
@@ -45,16 +46,15 @@ const Answers = () => {
                     color="primary"
                     onClick={() => {
                       setAnswerModal(true);
+                      setQuestionId(question.id);
                     }}>
                     Answer
                   </Button>
-                  <AnswerModal
-                    modal={answerModal}
-                    setModal={setAnswerModal}
-                    questionId={question.id}
-                  />
                 </CardFooter>
                 <hr />
+                {/* {question.answers.map((answer, index) => {
+                  return <p key={index}>{answer.text}</p>;
+                })} */}
                 <p className="text-warning pl-3">Top Answer</p>
                 {question.answers.length ? (
                   <ListGroup>
@@ -78,6 +78,11 @@ const Answers = () => {
             );
           })}
         </Col>
+        <AnswerModal
+          modal={answerModal}
+          setModal={setAnswerModal}
+          questionId={questionId}
+        />
       </Row>
     </Container>
   );
