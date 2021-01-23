@@ -71,7 +71,7 @@ const Answers = () => {
                       </Button>
                       <Button
                         className="ml-2"
-                        color="danger"
+                        color="primary"
                         onClick={() => {
                           setEditQuestionModal(true);
                           setQuestion(question);
@@ -91,14 +91,12 @@ const Answers = () => {
                     </Button>
                   )}
                 </CardFooter>
-                <hr />
-                {/* {question.answers.map((answer, index) => {
-        return <p key={index}>{answer.text}</p>;
-      })} */}
+                <hr className="my-0" />
+
                 <p className="text-warning pl-3">Top Answer</p>
                 {question.answers.length ? (
                   <ListGroup>
-                    {question.answers.map((answer, index) => {
+                    {question.answers.map((answer) => {
                       return (
                         <ListGroupItem key={answer.id}>
                           <ListGroupItemHeading style={{ fontSize: "1rem" }}>
@@ -124,30 +122,30 @@ const Answers = () => {
                     })}
                   </ListGroup>
                 ) : (
-                  <p className="text-danger pl-3">No ans given yet</p>
+                  <p className="text-danger pl-3">No answer given yet</p>
                 )}
               </Card>
             );
           })}
         </Col>
-        <AnswerModal
-          modal={answerModal}
-          setModal={setAnswerModal}
-          questionId={questionId}
-        />
-        <EditModal
-          modal={editQuestionModal}
-          setModal={setEditQuestionModal}
-          question={question}
-          questionId={questionId}
-        />
-        <EditAnswerModal
-          modal={editAnswerModal}
-          setModal={setEditAnswerModal}
-          answer={givenAnswer}
-          answerId={givenAnswerId}
-        />
       </Row>
+      <AnswerModal
+        modal={answerModal}
+        setModal={setAnswerModal}
+        questionId={questionId}
+      />
+      <EditModal
+        modal={editQuestionModal}
+        setModal={setEditQuestionModal}
+        question={question}
+        questionId={questionId}
+      />
+      <EditAnswerModal
+        modal={editAnswerModal}
+        setModal={setEditAnswerModal}
+        answer={givenAnswer}
+        answerId={givenAnswerId}
+      />
     </Container>
   );
 };

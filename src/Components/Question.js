@@ -1,21 +1,10 @@
 import React, { useState, useContext } from "react";
-import {
-  Label,
-  Input,
-  Form,
-  Button,
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardFooter,
-} from "reactstrap";
+import { Label, Input, Form, Button, Container, Row, Col } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
-import classNames from "classnames";
 
 import Context from "../context/Context";
 import EditModal from "./EditQuestionModal";
+import QuestionList from "./QuestionList";
 
 const Question = () => {
   const [questionText, setQuestionText] = useState("");
@@ -58,60 +47,17 @@ const Question = () => {
           </Form>
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4">
-        <Col>
-          {questions?.map((question, index) => {
-            return (
-              <Card
-                key={question.id}
-                className={classNames({
-                  "mt-4": index > 0,
-                })}>
-                <CardBody className="bg-light">
-                  <p
-                    style={{ fontSize: "1.5rem", fontWeight: 700 }}
-                    className="mb-1">
-                    {question.text}
-                  </p>
-                  <span className="text-secondary">Asked by </span>{" "}
-                  <span className="text-info">Admin</span>
-                </CardBody>
-                <CardFooter className="d-flex justify-content-end bg-transparent border-top-0">
-                  <Button
-                    className="ml-2"
-                    color="danger"
-                    onClick={() => {
-                      questionsDispatch({
-                        type: "REMOVE",
-                        id: question.id,
-                        payload: question,
-                      });
-                    }}>
-                    Delete
-                  </Button>
-                  <Button
-                    className="ml-2"
-                    color="danger"
-                    onClick={() => {
-                      setEditQuestionModal(true);
-                      setQuestion(question);
-                      setQuestionId(question.id);
-                    }}>
-                    Edit
-                  </Button>
-                </CardFooter>
-              </Card>
-            );
-          })}
-        </Col>
-
-        <EditModal
-          modal={editQuestionModal}
-          setModal={setEditQuestionModal}
-          question={question}
-          questionId={questionId}
-        />
-      </Row>
+      <QuestionList
+        questions={questions}
+        setQuestion={setQuestion}
+        setQuestionId={setQuestionId}
+        setEditQuestionModal={setEditQuestionModal}></QuestionList>
+      <EditModal
+        modal={editQuestionModal}
+        setModal={setEditQuestionModal}
+        question={question}
+        questionId={questionId}
+      />
     </Container>
   );
 };

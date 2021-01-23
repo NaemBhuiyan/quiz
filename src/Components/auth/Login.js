@@ -47,7 +47,7 @@ const Login = () => {
                   type="email"
                   name="email"
                   id="exampleEmail"
-                  placeholder="with a placeholder"
+                  placeholder="Type your email"
                   onChange={({ target }) => setAdminEmail(target.value)}
                 />
               </FormGroup>
@@ -57,7 +57,7 @@ const Login = () => {
                   type="password"
                   name="password"
                   id="examplePassword"
-                  placeholder="password placeholder"
+                  placeholder="Type your password"
                   onChange={({ target }) => setAdminPassword(target.value)}
                 />
               </FormGroup>
