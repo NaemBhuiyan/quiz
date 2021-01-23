@@ -29,11 +29,27 @@ export const arrayReducer = (state, action) => {
         return state;
       }
       return state.filter((item) => item.id !== id);
+    case "EDITANS":
+      const filteredState = state.map((item) => {
+        let newAns = item.answers.map((answer) => {
+          if (answer.id === payload.id) {
+            answer.text = payload.text;
+            return answer;
+          } else {
+            return answer;
+          }
+        });
+        item.answers = [...newAns];
+        return item;
+      });
+
+      return [...filteredState];
     case "EDIT":
       if (id !== 0 && !id) {
         console.error("id is required!");
         return state;
       }
+
       if (isUpdatedStart) {
         const filteredState = state.filter((item) => item.id !== id);
         return [payload, ...filteredState];

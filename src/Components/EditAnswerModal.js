@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import Context from "../context/Context";
 
-const EditAnswerModal = ({ setModal, modal, answer, answerId }) => {
+const EditAnswerModal = ({ setModal, modal, answer, answerId, questionId }) => {
   const [text, setText] = useState("");
   const { questionsDispatch } = useContext(Context);
 
@@ -23,8 +23,7 @@ const EditAnswerModal = ({ setModal, modal, answer, answerId }) => {
     e.preventDefault();
     questionsDispatch({
       type: "EDITANS",
-      id: answerId,
-      payload: { text: text },
+      payload: { id: answerId, text: text },
     });
     setModal(false);
   };
