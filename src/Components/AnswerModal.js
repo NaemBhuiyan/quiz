@@ -15,16 +15,21 @@ import Context from "../context/Context";
 
 const AnswerModal = ({ setModal, modal, questionId }) => {
   const [answerText, setAnswerText] = useState();
-  const { answers, setAnswers } = useContext(Context);
+  const { questions, setQuestions } = useContext(Context);
   const submitAnswer = (e) => {
     e.preventDefault();
     const newAnswer = {
       id: uuidv4(),
-      questionId: questionId,
       text: answerText,
     };
-    console.log(newAnswer);
-    setAnswers([newAnswer, ...answers]);
+    const updateQuestionArray = questions.map((question) => {
+      if (question.id === questionId) {
+        question.answers.push(newAnswer);
+      }
+      return question;
+    });
+    console.log(updateQuestionArray);
+    setQuestions([...updateQuestionArray]);
     setAnswerText("");
     setModal(false);
   };

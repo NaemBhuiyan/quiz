@@ -17,34 +17,19 @@ import Context from "../context/Context";
 import AnswerModal from "./AnswerModal";
 
 const Answers = () => {
-  const [allQuestion, setAllQuestion] = useState();
-  const { questions, answerModal, setAnswerModal, answers } = useContext(
-    Context
-  );
-  useEffect(() => {
-    setAllQuestion(questions);
-  }, [questions]);
-
-  const getAnswers = (id) => {
-    console.log(answers.filter((answer) => answer.questionId === id));
-    return answers.filter((answer) => {
-      if (answer.questionId === id) {
-        console.log(answer.questionId === id);
-      }
-    });
-  };
+  const { questions, answerModal, setAnswerModal } = useContext(Context);
 
   return (
     <Container>
       <Row className="justify-content-center">
         <Col>
           <h1 className="text-center my-5">Give Answer</h1>
-          {allQuestion?.map((question, index) => {
+          {questions?.map((question, index) => {
             return (
               <Card
                 key={question.id}
                 className={classNames({
-                  "mt-3": index > 0,
+                  "mt-4": index > 0,
                 })}>
                 <CardBody className="bg-light">
                   <p
@@ -71,20 +56,24 @@ const Answers = () => {
                 </CardFooter>
                 <hr />
                 <p className="text-warning pl-3">Top Answer</p>
-                <ListGroup>
-                  {getAnswers(question.id)?.map((answer) => {
-                    return (
-                      <ListGroupItem key={answer.id}>
-                        <ListGroupItemHeading style={{ fontSize: "1rem" }}>
-                          Login user
-                        </ListGroupItemHeading>
-                        <ListGroupItemText className="mt-3">
-                          {answer.text}
-                        </ListGroupItemText>
-                      </ListGroupItem>
-                    );
-                  })}
-                </ListGroup>
+                {question.answers.length ? (
+                  <ListGroup>
+                    {question.answers.map((answer, index) => {
+                      return (
+                        <ListGroupItem key={answer.id}>
+                          <ListGroupItemHeading style={{ fontSize: "1rem" }}>
+                            Login user
+                          </ListGroupItemHeading>
+                          <ListGroupItemText className="mt-3">
+                            {answer.text}
+                          </ListGroupItemText>
+                        </ListGroupItem>
+                      );
+                    })}
+                  </ListGroup>
+                ) : (
+                  <p className="text-danger pl-3">No ans given yet</p>
+                )}
               </Card>
             );
           })}

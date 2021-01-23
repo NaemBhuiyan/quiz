@@ -12,8 +12,9 @@ const Question = () => {
     const newQuestion = {
       id: uuidv4(),
       text: questionText,
+      answers: [],
     };
-    setQuestions([newQuestion, ...questions]);
+    setQuestions([...questions, newQuestion]);
     setQuestionText("");
   };
   return (
