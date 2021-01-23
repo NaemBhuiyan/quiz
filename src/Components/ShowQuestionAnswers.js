@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   CardBody,
@@ -15,10 +15,22 @@ import {
 import classNames from "classnames";
 import Context from "../context/Context";
 import AnswerModal from "./AnswerModal";
+import EditModal from "./EditQuestionModal";
+import EditAnswerModal from "./EditAnswerModal";
 
 const Answers = () => {
   const [questionId, setQuestionId] = useState();
-  const { questions, answerModal, setAnswerModal } = useContext(Context);
+  const [givenAnswerId, setGivenAnswerId] = useState();
+  const [question, setQuestion] = useState();
+  const [givenAnswer, setGivenAnswer] = useState();
+  const [editQuestionModal, setEditQuestionModal] = useState(false);
+  const [editAnswerModal, setEditAnswerModal] = useState(false);
+  const {
+    questions,
+    answerModal,
+    setAnswerModal,
+    questionsDispatch,
+  } = useContext(Context);
 
   return (
     <Container>
@@ -50,6 +62,28 @@ const Answers = () => {
                     }}>
                     Answer
                   </Button>
+                  <Button
+                    className="ml-2"
+                    color="danger"
+                    onClick={() => {
+                      questionsDispatch({
+                        type: "REMOVE",
+                        id: question.id,
+                        payload: question,
+                      });
+                    }}>
+                    Delete
+                  </Button>
+                  <Button
+                    className="ml-2"
+                    color="danger"
+                    onClick={() => {
+                      setEditQuestionModal(true);
+                      setQuestion(question);
+                      setQuestionId(question.id);
+                    }}>
+                    Edit
+                  </Button>
                 </CardFooter>
                 <hr />
                 {/* {question.answers.map((answer, index) => {
@@ -67,6 +101,16 @@ const Answers = () => {
                           <ListGroupItemText className="mt-3">
                             {answer.text}
                           </ListGroupItemText>
+                          <Button
+                            className="ml-2"
+                            color="danger"
+                            onClick={() => {
+                              setEditAnswerModal(true);
+                              setGivenAnswer(answer);
+                              setGivenAnswerId(answer.id);
+                            }}>
+                            Edit
+                          </Button>
                         </ListGroupItem>
                       );
                     })}
@@ -82,6 +126,18 @@ const Answers = () => {
           modal={answerModal}
           setModal={setAnswerModal}
           questionId={questionId}
+        />
+        <EditModal
+          modal={editQuestionModal}
+          setModal={setEditQuestionModal}
+          question={question}
+          questionId={questionId}
+        />
+        <EditAnswerModal
+          modal={editAnswerModal}
+          setModal={setEditAnswerModal}
+          answer={givenAnswer}
+          answerId={givenAnswerId}
         />
       </Row>
     </Container>

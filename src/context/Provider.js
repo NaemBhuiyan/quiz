@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
+import { arrayReducer } from "../reducers/arrayReducers";
 import Context from "./Context";
 
 const Provider = ({ children }) => {
-  const [questions, setQuestions] = useState(
+  // const [questions, setQuestions] = useState(
+  //   JSON.parse(localStorage.getItem("questions")) || []
+  // );
+  const [questions, questionsDispatch] = useReducer(
+    arrayReducer,
     JSON.parse(localStorage.getItem("questions")) || []
   );
 
@@ -20,7 +25,8 @@ const Provider = ({ children }) => {
   const value = {
     admin,
     questions,
-    setQuestions,
+    // setQuestions,
+    questionsDispatch,
     answerModal,
     setAnswerModal,
   };

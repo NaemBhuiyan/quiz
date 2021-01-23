@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -13,39 +11,37 @@ import {
 } from "reactstrap";
 import Context from "../context/Context";
 
-const AnswerModal = ({ setModal, modal, questionId }) => {
-  const [answerText, setAnswerText] = useState();
+const EditModal = ({ setModal, modal, question, questionId }) => {
+  const [text, setText] = useState("");
   const { questionsDispatch } = useContext(Context);
+
+  useEffect(() => {
+    modal && setText(question?.text);
+  }, [modal]);
+
   const submitAnswer = (e) => {
     e.preventDefault();
-    const newAnswer = {
-      id: uuidv4(),
-      text: answerText,
-    };
-
     questionsDispatch({
-      type: "ADD-QUESTIONS",
+      type: "EDIT",
       id: questionId,
-      payload: newAnswer,
+      payload: { text: text },
     });
-    setAnswerText("");
     setModal(false);
   };
-
   const toggle = () => setModal(!modal);
 
   return (
     <Modal isOpen={modal} toggle={toggle}>
       <Form>
-        <ModalHeader toggle={toggle}>Answer</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit</ModalHeader>
         <ModalBody>
           <Label for="question">Text Area</Label>
           <Input
             type="textarea"
             name="question"
             id="question"
-            value={answerText}
-            onChange={({ target }) => setAnswerText(target.value)}
+            value={text}
+            onChange={({ target }) => setText(target.value)}
           />
         </ModalBody>
         <ModalFooter>
@@ -70,4 +66,4 @@ const AnswerModal = ({ setModal, modal, questionId }) => {
   );
 };
 
-export default AnswerModal;
+export default EditModal;

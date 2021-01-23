@@ -6,7 +6,7 @@ import Context from "../context/Context";
 
 const Question = () => {
   const [questionText, setQuestionText] = useState("");
-  const { setQuestions, questions } = useContext(Context);
+  const { questionsDispatch } = useContext(Context);
   const submitQuestion = (e) => {
     e.preventDefault();
     const newQuestion = {
@@ -14,7 +14,10 @@ const Question = () => {
       text: questionText,
       answers: [],
     };
-    setQuestions([...questions, newQuestion]);
+    questionsDispatch({
+      type: "ADD",
+      payload: newQuestion,
+    });
     setQuestionText("");
   };
   return (

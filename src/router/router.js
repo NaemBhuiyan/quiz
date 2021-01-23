@@ -1,4 +1,4 @@
-import Answers from "../Components/Answers";
+import ShowQuestionAnswers from "../Components/ShowQuestionAnswers";
 import Login from "../Components/auth/Login";
 import Question from "../Components/Question";
 
@@ -15,7 +15,7 @@ const routers = [
   {
     path: "/answers",
     name: "answers",
-    component: Answers,
+    component: ShowQuestionAnswers,
     meta: {
       access: ["admin", "user"],
     },
