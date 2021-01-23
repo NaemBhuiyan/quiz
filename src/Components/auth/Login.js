@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import {
   Button,
   Form,
@@ -9,8 +11,23 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import Context from "../../context/Context";
 
 const Login = () => {
+  const { setIsAdmin, admin } = useContext(Context);
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const history = useHistory();
+
+  const login = () => {
+    if (admin.email === adminEmail && adminPassword === admin.password) {
+      localStorage.setItem("admin", JSON.stringify(true));
+      setIsAdmin(JSON.parse(localStorage.getItem("admin")));
+      history.push("/questions");
+    } else {
+      history.push("/answers");
+    }
+  };
   return (
     <div>
       <Container>
@@ -25,6 +42,7 @@ const Login = () => {
                   name="email"
                   id="exampleEmail"
                   placeholder="with a placeholder"
+                  onChange={({ target }) => setAdminEmail(target.value)}
                 />
               </FormGroup>
               <FormGroup>
@@ -34,9 +52,10 @@ const Login = () => {
                   name="password"
                   id="examplePassword"
                   placeholder="password placeholder"
+                  onChange={({ target }) => setAdminPassword(target.value)}
                 />
               </FormGroup>
-              <Button>Login</Button>
+              <Button onClick={login}>Login</Button>
             </Form>
           </Col>
         </Row>

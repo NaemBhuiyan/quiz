@@ -34,11 +34,6 @@ const AppNavbar = (props) => {
                 Answers
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to="/login">
-                Login
-              </NavLink>
-            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>

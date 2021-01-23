@@ -30,6 +30,7 @@ const Answers = () => {
     answerModal,
     setAnswerModal,
     questionsDispatch,
+    isAdmin,
   } = useContext(Context);
 
   return (
@@ -54,36 +55,41 @@ const Answers = () => {
                   <span className="text-info">Admin</span>
                 </CardBody>
                 <CardFooter className="d-flex justify-content-end bg-transparent border-top-0">
-                  <Button
-                    color="primary"
-                    onClick={() => {
-                      setAnswerModal(true);
-                      setQuestionId(question.id);
-                    }}>
-                    Answer
-                  </Button>
-                  <Button
-                    className="ml-2"
-                    color="danger"
-                    onClick={() => {
-                      questionsDispatch({
-                        type: "REMOVE",
-                        id: question.id,
-                        payload: question,
-                      });
-                    }}>
-                    Delete
-                  </Button>
-                  <Button
-                    className="ml-2"
-                    color="danger"
-                    onClick={() => {
-                      setEditQuestionModal(true);
-                      setQuestion(question);
-                      setQuestionId(question.id);
-                    }}>
-                    Edit
-                  </Button>
+                  {isAdmin ? (
+                    <>
+                      <Button
+                        className="ml-2"
+                        color="danger"
+                        onClick={() => {
+                          questionsDispatch({
+                            type: "REMOVE",
+                            id: question.id,
+                            payload: question,
+                          });
+                        }}>
+                        Delete
+                      </Button>
+                      <Button
+                        className="ml-2"
+                        color="danger"
+                        onClick={() => {
+                          setEditQuestionModal(true);
+                          setQuestion(question);
+                          setQuestionId(question.id);
+                        }}>
+                        Edit
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      color="primary"
+                      onClick={() => {
+                        setAnswerModal(true);
+                        setQuestionId(question.id);
+                      }}>
+                      Answer
+                    </Button>
+                  )}
                 </CardFooter>
                 <hr />
                 {/* {question.answers.map((answer, index) => {
@@ -101,16 +107,18 @@ const Answers = () => {
                           <ListGroupItemText className="mt-3">
                             {answer.text}
                           </ListGroupItemText>
-                          <Button
-                            className="ml-2"
-                            color="danger"
-                            onClick={() => {
-                              setEditAnswerModal(true);
-                              setGivenAnswer(answer);
-                              setGivenAnswerId(answer.id);
-                            }}>
-                            Edit
-                          </Button>
+                          {!isAdmin && (
+                            <Button
+                              className="ml-2"
+                              color="danger"
+                              onClick={() => {
+                                setEditAnswerModal(true);
+                                setGivenAnswer(answer);
+                                setGivenAnswerId(answer.id);
+                              }}>
+                              Edit
+                            </Button>
+                          )}
                         </ListGroupItem>
                       );
                     })}

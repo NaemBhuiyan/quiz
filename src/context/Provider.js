@@ -3,17 +3,16 @@ import { arrayReducer } from "../reducers/arrayReducers";
 import Context from "./Context";
 
 const Provider = ({ children }) => {
-  // const [questions, setQuestions] = useState(
-  //   JSON.parse(localStorage.getItem("questions")) || []
-  // );
   const [questions, questionsDispatch] = useReducer(
     arrayReducer,
     JSON.parse(localStorage.getItem("questions")) || []
   );
 
   const [answerModal, setAnswerModal] = useState(false);
+  const [isAdmin, setIsAdmin] = useState();
+
   const admin = {
-    email: "admin@mail.com",
+    email: "admin@email.com",
     password: "admin",
   };
 
@@ -25,10 +24,11 @@ const Provider = ({ children }) => {
   const value = {
     admin,
     questions,
-    // setQuestions,
     questionsDispatch,
     answerModal,
     setAnswerModal,
+    isAdmin,
+    setIsAdmin,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

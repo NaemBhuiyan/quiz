@@ -1,7 +1,7 @@
 export const arrayReducer = (state, action) => {
   const { type, id, payload, isAddToStart, isUpdatedStart } = action;
   switch (type) {
-    case "ADD-QUESTIONS":
+    case "ADD-ANSWER":
       const updateQuestionArray = state.map((question) => {
         if (question.id === id) {
           question.answers.push(payload);

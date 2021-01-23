@@ -24,7 +24,7 @@ const AnswerModal = ({ setModal, modal, questionId }) => {
     };
 
     questionsDispatch({
-      type: "ADD-QUESTIONS",
+      type: "ADD-ANSWER",
       id: questionId,
       payload: newAnswer,
     });
