@@ -10,9 +10,11 @@ import ToastNotice from "./Components/Toast";
 function App() {
   const { userType } = useContext(Context);
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     userType && setShow(true);
   }, [userType]);
+
   return (
     <div className="App">
       <AppNavbar />

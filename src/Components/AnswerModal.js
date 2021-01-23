@@ -16,13 +16,13 @@ import Context from "../context/Context";
 const AnswerModal = ({ setModal, modal, questionId }) => {
   const [answerText, setAnswerText] = useState();
   const { questionsDispatch } = useContext(Context);
+
   const submitAnswer = (e) => {
     e.preventDefault();
     const newAnswer = {
       id: uuidv4(),
       text: answerText,
     };
-
     questionsDispatch({
       type: "ADD-ANSWER",
       id: questionId,

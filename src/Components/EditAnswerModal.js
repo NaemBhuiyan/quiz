@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import Context from "../context/Context";
 
-const EditAnswerModal = ({ setModal, modal, answer, answerId, questionId }) => {
+const EditAnswerModal = ({ setModal, modal, answer, answerId }) => {
   const [text, setText] = useState("");
   const { questionsDispatch } = useContext(Context);
 

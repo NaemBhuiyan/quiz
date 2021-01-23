@@ -21,6 +21,13 @@ const AppNavbar = () => {
 
   const toggleNavbar = () => setCollapsed(!collapsed);
 
+  const handleShowToast = () => {
+    !userType && setShow(true);
+    if (userType === "user") {
+      setMassage("You Have No Access");
+      setShow(true);
+    }
+  };
   return (
     <div>
       <Navbar expand="md" color="light" light>
@@ -30,14 +37,7 @@ const AppNavbar = () => {
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav className="mr-auto ml-4" navbar>
-            <NavItem
-              onClick={() => {
-                !userType && setShow(true);
-                if (userType === "user") {
-                  setMassage("You Have No Access");
-                  setShow(true);
-                }
-              }}>
+            <NavItem onClick={handleShowToast}>
               <NavLink tag={Link} to="/questions">
                 Question
               </NavLink>
