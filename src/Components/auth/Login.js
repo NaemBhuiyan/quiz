@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 import {
   Button,
@@ -14,28 +14,32 @@ import {
 import Context from "../../context/Context";
 
 const Login = () => {
-  const { setIsAdmin, admin, setIsLogin } = useContext(Context);
+  const { admin, setUserType, userType } = useContext(Context);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
   const history = useHistory();
 
   const login = () => {
     if (admin.email === adminEmail && adminPassword === admin.password) {
-      localStorage.setItem("admin", JSON.stringify(true));
-      setIsAdmin(JSON.parse(localStorage.getItem("admin")));
-      setIsLogin(true);
+      localStorage.setItem("userType", JSON.stringify("admin"));
+      setUserType(JSON.parse(localStorage.getItem("userType")));
       history.push("/questions");
     } else {
+      localStorage.setItem("userType", JSON.stringify("user"));
+      setUserType(JSON.parse(localStorage.getItem("userType")));
       history.push("/answers");
     }
   };
+  if (userType) {
+    return <Redirect to={userType === "admin" ? "/questions" : "/answers"} />;
+  }
   return (
     <div>
       <Container>
         <h3 className=" mt-5 text-center">Log in</h3>
         <Row className="justify-content-center mt-5">
           <Col md={6}>
-            <Form>
+            <Form onSubmit={login}>
               <FormGroup>
                 <Label for="exampleEmail">Email</Label>
                 <Input
@@ -56,7 +60,7 @@ const Login = () => {
                   onChange={({ target }) => setAdminPassword(target.value)}
                 />
               </FormGroup>
-              <Button onClick={login}>Login</Button>
+              <Button type="submit">Login</Button>
             </Form>
           </Col>
         </Row>

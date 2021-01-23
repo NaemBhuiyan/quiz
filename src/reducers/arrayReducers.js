@@ -1,5 +1,6 @@
 export const arrayReducer = (state, action) => {
   const { type, id, payload, isAddToStart, isUpdatedStart } = action;
+
   switch (type) {
     case "ADD-ANSWER":
       const updateQuestionArray = state.map((question) => {
@@ -9,6 +10,7 @@ export const arrayReducer = (state, action) => {
         return question;
       });
       return [...updateQuestionArray];
+
     case "ADD":
       if (!payload) {
         console.error("payload is required!");
@@ -21,14 +23,15 @@ export const arrayReducer = (state, action) => {
       if (isAddToStart) {
         return [payload, ...state];
       }
-      console.log(state);
       return [...state, payload];
+
     case "REMOVE":
       if (id !== 0 && !id) {
         console.error("id is required!");
         return state;
       }
       return state.filter((item) => item.id !== id);
+
     case "EDITANS":
       const filteredState = state.map((item) => {
         let newAns = item.answers.map((answer) => {
@@ -44,6 +47,7 @@ export const arrayReducer = (state, action) => {
       });
 
       return [...filteredState];
+
     case "EDIT":
       if (id !== 0 && !id) {
         console.error("id is required!");

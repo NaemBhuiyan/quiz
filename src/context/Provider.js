@@ -2,23 +2,23 @@ import React, { useState, useEffect, useReducer } from "react";
 import { arrayReducer } from "../reducers/arrayReducers";
 import Context from "./Context";
 
+const initialQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+
 const Provider = ({ children }) => {
   const [questions, questionsDispatch] = useReducer(
     arrayReducer,
-    JSON.parse(localStorage.getItem("questions")) || []
+    initialQuestions
   );
 
   const [answerModal, setAnswerModal] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(
-    JSON.parse(localStorage.getItem("admin") || false)
+  const [userType, setUserType] = useState(
+    JSON.parse(localStorage.getItem("userType"))
   );
 
   const admin = {
     email: "admin@email.com",
     password: "admin",
   };
-
   // set localStorage
   useEffect(() => {
     localStorage.setItem("questions", JSON.stringify(questions));
@@ -30,10 +30,8 @@ const Provider = ({ children }) => {
     questionsDispatch,
     answerModal,
     setAnswerModal,
-    isAdmin,
-    setIsAdmin,
-    isLogin,
-    setIsLogin,
+    userType,
+    setUserType,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

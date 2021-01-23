@@ -1,18 +1,18 @@
-function PrivateRoute({ children, ...rest }) {
-  let auth = useContext(con);
+import { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
+import Context from "../context/Context";
+
+export default function PrivateRoute({ component: Component, meta, ...rest }) {
+  const { userType } = useContext(Context);
+  console.log(userType);
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        auth.user ? (
-          children
+      render={(props) =>
+        userType && meta.access.includes(userType) ? (
+          <Component {...props} />
         ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
+          <Redirect to="/" />
         )
       }
     />

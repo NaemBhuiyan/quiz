@@ -30,7 +30,7 @@ const Answers = () => {
     answerModal,
     setAnswerModal,
     questionsDispatch,
-    isAdmin,
+    userType,
   } = useContext(Context);
 
   return (
@@ -55,7 +55,7 @@ const Answers = () => {
                   <span className="text-info">Admin</span>
                 </CardBody>
                 <CardFooter className="d-flex justify-content-end bg-transparent border-top-0">
-                  {isAdmin ? (
+                  {userType === "admin" ? (
                     <>
                       <Button
                         className="ml-2"
@@ -93,8 +93,8 @@ const Answers = () => {
                 </CardFooter>
                 <hr />
                 {/* {question.answers.map((answer, index) => {
-                  return <p key={index}>{answer.text}</p>;
-                })} */}
+        return <p key={index}>{answer.text}</p>;
+      })} */}
                 <p className="text-warning pl-3">Top Answer</p>
                 {question.answers.length ? (
                   <ListGroup>
@@ -107,7 +107,7 @@ const Answers = () => {
                           <ListGroupItemText className="mt-3">
                             {answer.text}
                           </ListGroupItemText>
-                          {!isAdmin && (
+                          {userType === "user" && (
                             <Button
                               className="ml-2"
                               color="danger"
