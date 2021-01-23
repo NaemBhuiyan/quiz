@@ -17,6 +17,7 @@ const Login = () => {
   const { setUserType, userType } = useContext(Context);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
+
   const history = useHistory();
 
   const login = () => {

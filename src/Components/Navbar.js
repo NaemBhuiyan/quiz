@@ -11,10 +11,11 @@ import {
   Button,
 } from "reactstrap";
 import Context from "../context/Context";
+import ToastNotice from "./Toast";
 
 const AppNavbar = () => {
   const [collapsed, setCollapsed] = useState(true);
-
+  const [show, setShow] = useState(false);
   const { userType, handleLogOut } = useContext(Context);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
@@ -28,12 +29,12 @@ const AppNavbar = () => {
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav className="mr-auto ml-4" navbar>
-            <NavItem>
+            <NavItem onClick={() => !userType && setShow(true)}>
               <NavLink tag={Link} to="/questions">
                 Question
               </NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem onClick={() => !userType && setShow(true)}>
               <NavLink tag={Link} to="/answers">
                 Answers
               </NavLink>
@@ -46,6 +47,11 @@ const AppNavbar = () => {
           )}
         </Collapse>
       </Navbar>
+      <ToastNotice
+        message={`You are not logged in`}
+        show={show}
+        setShow={setShow}
+      />
     </div>
   );
 };
