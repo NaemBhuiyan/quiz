@@ -25,7 +25,6 @@ const routers = [
     path: "/",
     name: "login",
     component: Login,
-    exact: true,
   },
 ];
 

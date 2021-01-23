@@ -4,7 +4,6 @@ import Context from "../context/Context";
 
 export default function PrivateRoute({ component: Component, meta, ...rest }) {
   const { userType } = useContext(Context);
-  console.log(userType);
   return (
     <Route
       {...rest}
