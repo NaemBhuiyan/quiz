@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -15,11 +15,9 @@ import Context from "../context/Context";
 const AppNavbar = () => {
   const [collapsed, setCollapsed] = useState(true);
 
-  const { userType, setUserType } = useContext(Context);
+  const { userType, handleLogOut } = useContext(Context);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
-
-  const history = useHistory();
 
   return (
     <div>
@@ -42,13 +40,7 @@ const AppNavbar = () => {
             </NavItem>
           </Nav>
           {userType && (
-            <Button
-              color="info"
-              onClick={() => {
-                localStorage.removeItem("userType");
-                setUserType(null);
-                history.push("/");
-              }}>
+            <Button color="info" onClick={handleLogOut}>
               Log out
             </Button>
           )}

@@ -14,13 +14,13 @@ import {
 import Context from "../../context/Context";
 
 const Login = () => {
-  const { admin, setUserType, userType } = useContext(Context);
+  const { setUserType, userType } = useContext(Context);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
   const history = useHistory();
 
   const login = () => {
-    if (admin.email === adminEmail && adminPassword === admin.password) {
+    if (adminEmail === "admin@email.com" && adminPassword === "admin") {
       localStorage.setItem("userType", JSON.stringify("admin"));
       setUserType(JSON.parse(localStorage.getItem("userType")));
       history.push("/questions");

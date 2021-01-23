@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
+import { useHistory } from "react-router-dom";
+
 import { arrayReducer } from "../reducers/arrayReducers";
 import Context from "./Context";
 
@@ -15,23 +17,27 @@ const Provider = ({ children }) => {
     JSON.parse(localStorage.getItem("userType"))
   );
 
-  const admin = {
-    email: "admin@email.com",
-    password: "admin",
-  };
+  const history = useHistory();
+
   // set localStorage
   useEffect(() => {
     localStorage.setItem("questions", JSON.stringify(questions));
   }, [questions]);
 
+  const handleLogOut = () => {
+    localStorage.removeItem("userType");
+    setUserType(null);
+    history.push("/");
+  };
+
   const value = {
-    admin,
     questions,
     questionsDispatch,
     answerModal,
     setAnswerModal,
     userType,
     setUserType,
+    handleLogOut,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
