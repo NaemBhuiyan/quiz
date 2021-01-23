@@ -16,6 +16,7 @@ import ToastNotice from "./Toast";
 const AppNavbar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [show, setShow] = useState(false);
+  const [message, setMassage] = useState(`You are not logged in`);
   const { userType, handleLogOut } = useContext(Context);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
@@ -29,7 +30,14 @@ const AppNavbar = () => {
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav className="mr-auto ml-4" navbar>
-            <NavItem onClick={() => !userType && setShow(true)}>
+            <NavItem
+              onClick={() => {
+                !userType && setShow(true);
+                if (userType === "user") {
+                  setMassage("You Have No Access");
+                  setShow(true);
+                }
+              }}>
               <NavLink tag={Link} to="/questions">
                 Question
               </NavLink>
@@ -47,11 +55,7 @@ const AppNavbar = () => {
           )}
         </Collapse>
       </Navbar>
-      <ToastNotice
-        message={`You are not logged in`}
-        show={show}
-        setShow={setShow}
-      />
+      <ToastNotice message={message} show={show} setShow={setShow} />
     </div>
   );
 };
